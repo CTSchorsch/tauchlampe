@@ -1,0 +1,21 @@
+Comment,Designator,Footprint,LCSC
+22u0,"C1,C3,C4",Capacitor_SMD:C_0805_2012Metric,C45783
+100n,"C2,C5",Capacitor_SMD:C_0805_2012Metric,C49678
+SS54,D1,Diode_SMD:D_SMA,C22452
+LED blau,D2,LED_SMD:LED_0805_2012Metric,C2293
+M1,H1,MountingHole:MountingHole_3.2mm_M3,
+M2,H2,MountingHole:MountingHole_3.2mm_M3,
+LED+,J1,TestPoint:TestPoint_Plated_Hole_D3.0mm,
+LED-,J2,TestPoint:TestPoint_Plated_Hole_D3.0mm,
+Conn_01x04,J3,Connector_JST:JST_ZE_BM04B-ZESS-TBT_1x04-1MP_P1.50mm_Vertical,
+Conn_01x02,J4,Connector_PinHeader_2.00mm:PinHeader_1x02_P2.00mm_Vertical,
+Conn_01x06,J5,Connector_PinHeader_2.00mm:PinHeader_1x06_P2.00mm_Vertical,
+MWSA0603-100MT,L1,Inductor_SMD:L_6.3x6.3_H3,C132141
+BSC042NE78NS36,Q1,Package_TO_SOT_SMD:TDSON-8-1,C139521
+0R070,R1,Resistor_SMD:R_2512_6332Metric,C76251
+82k5,R3,Resistor_SMD:R_0805_2012Metric,C17835
+8k81,R4,Resistor_SMD:R_0805_2012Metric,C17771
+4k75,R5,Resistor_SMD:R_0805_2012Metric,C17672
+10k0,"R2,R6,R7",Resistor_SMD:R_0805_2012Metric,C17414
+MAX16819ATT+T,U1,buck_3a_v4:SON95P300X300X80-7N,C143371
+ATtiny45-20SU,U2,Package_SO:SOIJ-8_5.3x5.3mm_P1.27mm,C62689
