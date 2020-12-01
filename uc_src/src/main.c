@@ -253,7 +253,7 @@ void pwm_set( uint8_t val )
 	if ( val > 0 ) {
 		OCR0B = val;
 	  //TCCR0A = (1 << COM0B1) | (1 << WGM01) | (1 << WGM00); // non inverting, fast pwm
-    TCCR0B = (1 << CS02) ; // clock divider 256: 8 Mhz / 256 / 256 = 122 Hz PWM frequency
+    TCCR0B = (1 << CS02) ; // clock divider 64: 8 Mhz / 256 / 256 = 122 Hz PWM frequency
 
 	} else {
     OCR0B = 0;
@@ -345,8 +345,7 @@ void gotoSleep ( void )
     sleep_disable();
   //  power_all_enable();
     sbi(ADCSRA,ADEN);
-    TCCR1 = (1 << CTC1) | (1 << CS12) | (1 << CS11) | (1 << CS10);
-
+    TCCR1 = (1 << CTC1) | (1 << CS12) | (1 << CS11);
 }
 
 int main (void)
@@ -361,6 +360,8 @@ int main (void)
 #endif
   //Disable digital input on analog pins
   DIDR0 |= (1 << ADC2D) | (1 << ADC3D);
+
+  
 
   pwm_init();
 	ADC_Init();
