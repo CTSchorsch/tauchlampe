@@ -7,6 +7,9 @@
  *
  * Mikrocontroller Code:
  * Version 5.0
+ * 
+ * SET Low auf 0xC2
+ * avrdude -P usb -p attiny45 -c stk500v2 -U lfuse:w:0xc2:m
  *
  * History:
  * 14.11.2020	CPU-Wechsel von ATTINY44 auf ATTINY45 (8Pin)
@@ -151,7 +154,12 @@ ISR ( TIM1_COMPA_vect )
 
   
   if (int_ticks > 300) PCMSK = (1 << PCINT2); //enable for PINB2
-  if (int_ticks > 1000) pressed = 0;
+  if (int_ticks > 1000) {
+    pressed = 0;
+    if (pwmLevel == PWM_AUS) {
+      gotoSleep();
+    }
+  } 
 
 	switch (batteryStatus) {
 		case BAT_EMPTY:
@@ -177,7 +185,7 @@ ISR ( TIM1_COMPA_vect )
 
 ISR ( PCINT0_vect)
 {
-  if ( ! (HW_PORT_IN & (1 << MODE_PIN)) ) { //fallende Flanke
+  if ( (HW_PORT_IN & (1 << MODE_PIN)) ) { //fallende Flanke
     PCMSK = 0;
     int_ticks=0;
     if ( (pwmLevel == PWM_AUS) && (pressed == 0)) {
@@ -335,33 +343,32 @@ uint8_t CheckConditions(void )
 void gotoSleep ( void )
 {
     PCMSK = (1 << PCINT2); //enable for PINA2
-    cbi(ADCSRA,ADEN);
+    power_adc_disable();
     TCCR1 = 0;
-    sbi(HW_PORT_OUT,(1 << LED_PIN));//LED aus
+    HW_PORT_OUT |= (1 << LED_PIN);
     set_sleep_mode(SLEEP_MODE_PWR_DOWN);
-//    power_all_disable();
     sleep_enable();
-    sleep_mode();
+    sleep_cpu();
     sleep_disable();
-  //  power_all_enable();
-    sbi(ADCSRA,ADEN);
+    power_adc_enable();
     TCCR1 = (1 << CTC1) | (1 << CS12) | (1 << CS11);
 }
 
 int main (void)
 {
   uint8_t startupflag = 0;
-
-  clock_prescale_set(clock_div_1);
+  
+  // Set MasterClock to 8MHz
+	clock_prescale_set(clock_div_1);
   DDRB = (1 << LED_PIN) | (1 << PWM_PIN);
-  HW_PORT_OUT |= (1 << LED_PIN);
+  HW_PORT_OUT = 0;
+ 
+
 #ifdef USE_SERIAL
   DDRB |= (1 << TMESS_PIN);
 #endif
   //Disable digital input on analog pins
   DIDR0 |= (1 << ADC2D) | (1 << ADC3D);
-
-  
 
   pwm_init();
 	ADC_Init();
@@ -389,6 +396,7 @@ int main (void)
     startup( newLevel );
   }
 
+  
   ms_ticks = 0;
   while(1) {
     //rest dimlevel to maximum
@@ -399,7 +407,7 @@ int main (void)
 
     //Lampe aus
     if (pwmLevel == PWM_AUS) {
-      pwm_set(pwmLevel);
+      //pwm_set(pwmLevel);
       if ( newLevel > PWM_AUS ) {
         pwmLevel = CheckConditions();
         if (pwmLevel > newLevel) pwmLevel = newLevel;  //CheckConditions erlaubt höheren dimmwert
@@ -411,7 +419,8 @@ int main (void)
       if (pwmLevel > newLevel) pwmLevel = newLevel;  //CheckConditions erlaubt höheren dimmwert
       pwm_set ( pwmLevel );
       if ( pwmLevel == PWM_AUS ) {
-        gotoSleep();
+         // _delay_ms(500);
+          gotoSleep();
       }
     }
   }
