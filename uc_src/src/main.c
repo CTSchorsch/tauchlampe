@@ -86,7 +86,6 @@ volatile uint8_t txdata;
 char txtbuff[20];
 #endif
 
-
 /**************** ISR Routinen ***************************************/
 
 
@@ -156,9 +155,6 @@ ISR ( TIM1_COMPA_vect )
   if (int_ticks > 300) PCMSK = (1 << PCINT2); //enable for PINB2
   if (int_ticks > 1000) {
     pressed = 0;
-    if (pwmLevel == PWM_AUS) {
-      gotoSleep();
-    }
   } 
 
 	switch (batteryStatus) {
@@ -410,6 +406,8 @@ int main (void)
       //pwm_set(pwmLevel);
       if ( newLevel > PWM_AUS ) {
         pwmLevel = CheckConditions();
+        if (int_ticks >1100) // wait for second click, if not, sleep
+          gotoSleep();
         if (pwmLevel > newLevel) pwmLevel = newLevel;  //CheckConditions erlaubt höheren dimmwert
         startup ( pwmLevel );
       }
@@ -418,10 +416,6 @@ int main (void)
       pwmLevel = CheckConditions();
       if (pwmLevel > newLevel) pwmLevel = newLevel;  //CheckConditions erlaubt höheren dimmwert
       pwm_set ( pwmLevel );
-      if ( pwmLevel == PWM_AUS ) {
-         // _delay_ms(500);
-          gotoSleep();
-      }
     }
   }
 	return 0;
