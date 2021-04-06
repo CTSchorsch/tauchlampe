@@ -183,9 +183,10 @@ ISR ( PCINT0_vect)
 {
   if ( (HW_PORT_IN & (1 << MODE_PIN)) ) { //fallende Flanke
     PCMSK = 0;
-    int_ticks=0;
+
     if ( (pwmLevel == PWM_AUS) && (pressed == 0)) {
       pressed = 1;
+      int_ticks=0;
       return;
     }
     switch (pwmLevel) {
@@ -404,10 +405,10 @@ int main (void)
     //Lampe aus
     if (pwmLevel == PWM_AUS) {
       //pwm_set(pwmLevel);
+      if (int_ticks > 1100) //wait for second click, if not sleep
+          gotoSleep();
       if ( newLevel > PWM_AUS ) {
         pwmLevel = CheckConditions();
-        if (int_ticks >1100) // wait for second click, if not, sleep
-          gotoSleep();
         if (pwmLevel > newLevel) pwmLevel = newLevel;  //CheckConditions erlaubt höheren dimmwert
         startup ( pwmLevel );
       }
