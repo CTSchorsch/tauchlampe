@@ -2,7 +2,11 @@
 <export version="D">
   <design>
     <source>/home/schardt/privat/projekte/Tauchlampe/kicad/buck_3a_v4.sch</source>
+<<<<<<< HEAD
     <date>Mon 01 Feb 2021 07:48:39 CET</date>
+=======
+    <date>Fri 16 Apr 2021 09:31:00 CEST</date>
+>>>>>>> hw4
     <tool>Eeschema 5.1.6+dfsg1-1</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -52,8 +56,13 @@
       <tstamp>5F9C0AFA</tstamp>
     </comp>
     <comp ref="L1">
+<<<<<<< HEAD
       <value>WE7447714100</value>
       <footprint>Inductor_SMD:L_10.4x10.4_H4.8</footprint>
+=======
+      <value>MWSA0603-100MT</value>
+      <footprint>Inductor_SMD:L_Sumida_CDMC6D28_7.25x6.5mm</footprint>
+>>>>>>> hw4
       <datasheet>~</datasheet>
       <fields>
         <field name="LCSC">C132141</field>
@@ -63,11 +72,15 @@
       <tstamp>5F9C1A34</tstamp>
     </comp>
     <comp ref="Q1">
+<<<<<<< HEAD
       <value>BSC050N03</value>
+=======
+      <value>BSC022N04LSATMA</value>
+>>>>>>> hw4
       <footprint>Package_TO_SOT_SMD:TDSON-8-1</footprint>
       <datasheet>http://www.infineon.com/dgdl/Infineon-BSC040N08NS5-DS-v02_00-EN.pdf?fileId=5546d4624ad04ef9014ae3065a7e2a05</datasheet>
       <fields>
-        <field name="LCSC">C139521</field>
+        <field name="LCSC"> C148266</field>
       </fields>
       <libsource lib="Transistor_FET" part="BSC040N08NS5" description="100A Id, 80V Vds, OptiMOS N-Channel Power MOSFET, 4.0mOhm Ron, Qg (typ) 43.0nC, PG-TDSON-8"/>
       <sheetpath names="/" tstamps="/"/>
@@ -115,14 +128,6 @@
       <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>5F9D49D8</tstamp>
-    </comp>
-    <comp ref="J4">
-      <value>Conn_01x02</value>
-      <footprint>Connector_PinHeader_2.00mm:PinHeader_1x02_P2.00mm_Vertical</footprint>
-      <datasheet>~</datasheet>
-      <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamp>5F9D60F0</tstamp>
     </comp>
     <comp ref="R7">
       <value>10k0</value>
@@ -191,8 +196,13 @@
       <tstamp>5F9E938B</tstamp>
     </comp>
     <comp ref="C4">
+<<<<<<< HEAD
       <value>47u0</value>
       <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+=======
+      <value>22u0/16V</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+>>>>>>> hw4
       <datasheet>~</datasheet>
       <fields>
         <field name="LCSC">C45783</field>
@@ -201,6 +211,7 @@
       <sheetpath names="/" tstamps="/"/>
       <tstamp>5F9EC0C8</tstamp>
     </comp>
+<<<<<<< HEAD
     <comp ref="C3">
       <value>100u/16V</value>
       <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
@@ -223,6 +234,8 @@
       <sheetpath names="/" tstamps="/"/>
       <tstamp>5F9EA3C0</tstamp>
     </comp>
+=======
+>>>>>>> hw4
     <comp ref="R5">
       <value>4k75</value>
       <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
@@ -276,10 +289,60 @@
       <value>4n70</value>
       <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
       <datasheet>~</datasheet>
+<<<<<<< HEAD
+=======
+      <fields>
+        <field name="LCSC">C1744</field>
+      </fields>
+>>>>>>> hw4
       <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>5FB6DC72</tstamp>
     </comp>
+<<<<<<< HEAD
+=======
+    <comp ref="C1">
+      <value>100u/16V</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="LCSC">C90143</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6079EE15</tstamp>
+    </comp>
+    <comp ref="C3">
+      <value>DNP</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>607A3389</tstamp>
+    </comp>
+    <comp ref="C7">
+      <value>22u0/16V</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="LCSC">C45783</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>607A7D2F</tstamp>
+    </comp>
+    <comp ref="R8">
+      <value>CMFB103F3950FANT</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="LCSC">C51597</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6078CC24</tstamp>
+    </comp>
+>>>>>>> hw4
   </components>
   <libparts>
     <libpart lib="Connector_Generic" part="Conn_01x01">
@@ -294,21 +357,6 @@
       </fields>
       <pins>
         <pin num="1" name="Pin_1" type="passive"/>
-      </pins>
-    </libpart>
-    <libpart lib="Connector_Generic" part="Conn_01x02">
-      <description>Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
-      <docs>~</docs>
-      <footprints>
-        <fp>Connector*:*_1x??_*</fp>
-      </footprints>
-      <fields>
-        <field name="Reference">J</field>
-        <field name="Value">Conn_01x02</field>
-      </fields>
-      <pins>
-        <pin num="1" name="Pin_1" type="passive"/>
-        <pin num="2" name="Pin_2" type="passive"/>
       </pins>
     </libpart>
     <libpart lib="Connector_Generic" part="Conn_01x04">
@@ -645,6 +693,7 @@
     </library>
   </libraries>
   <nets>
+<<<<<<< HEAD
     <net code="1" name="/MODE">
       <node ref="U2" pin="7"/>
       <node ref="R2" pin="2"/>
@@ -672,12 +721,26 @@
       <node ref="R4" pin="1"/>
       <node ref="R3" pin="2"/>
       <node ref="U2" pin="2"/>
+=======
+    <net code="1" name="+5V">
+      <node ref="J5" pin="6"/>
+      <node ref="U1" pin="6"/>
+      <node ref="U2" pin="8"/>
+      <node ref="C4" pin="1"/>
+      <node ref="C5" pin="1"/>
+      <node ref="R6" pin="1"/>
+      <node ref="R7" pin="1"/>
+      <node ref="R2" pin="1"/>
+      <node ref="R5" pin="2"/>
+      <node ref="C7" pin="1"/>
+>>>>>>> hw4
     </net>
-    <net code="5" name="/TMESS">
+    <net code="2" name="/TMESS">
       <node ref="R6" pin="2"/>
-      <node ref="J4" pin="1"/>
       <node ref="U2" pin="3"/>
+      <node ref="R8" pin="1"/>
     </net>
+<<<<<<< HEAD
     <net code="6" name="GND">
       <node ref="C4" pin="2"/>
       <node ref="Q1" pin="1"/>
@@ -712,14 +775,72 @@
       <node ref="U2" pin="1"/>
     </net>
     <net code="9" name="/LED">
+=======
+    <net code="3" name="VCC">
+      <node ref="J3" pin="1"/>
+      <node ref="U1" pin="1"/>
+      <node ref="D1" pin="1"/>
+      <node ref="R1" pin="2"/>
+      <node ref="C2" pin="1"/>
+      <node ref="R3" pin="1"/>
+      <node ref="C1" pin="1"/>
+    </net>
+    <net code="4" name="/PWM">
+      <node ref="U1" pin="3"/>
+      <node ref="J5" pin="2"/>
+      <node ref="U2" pin="6"/>
+    </net>
+    <net code="5" name="/MODE">
+      <node ref="U2" pin="7"/>
+      <node ref="J3" pin="2"/>
+      <node ref="R2" pin="2"/>
+      <node ref="J5" pin="1"/>
+    </net>
+    <net code="6" name="/LED">
+      <node ref="U2" pin="5"/>
+>>>>>>> hw4
       <node ref="D2" pin="1"/>
       <node ref="J5" pin="4"/>
       <node ref="U2" pin="5"/>
     </net>
+<<<<<<< HEAD
+=======
+    <net code="7" name="/RESET">
+      <node ref="U2" pin="1"/>
+      <node ref="R7" pin="2"/>
+      <node ref="J5" pin="3"/>
+    </net>
+    <net code="8" name="/VMESS">
+      <node ref="R4" pin="1"/>
+      <node ref="R3" pin="2"/>
+      <node ref="U2" pin="2"/>
+      <node ref="C6" pin="1"/>
+    </net>
+    <net code="9" name="GND">
+      <node ref="Q1" pin="2"/>
+      <node ref="Q1" pin="3"/>
+      <node ref="Q1" pin="1"/>
+      <node ref="C6" pin="2"/>
+      <node ref="J5" pin="5"/>
+      <node ref="J3" pin="3"/>
+      <node ref="J3" pin="4"/>
+      <node ref="C1" pin="2"/>
+      <node ref="R4" pin="2"/>
+      <node ref="C5" pin="2"/>
+      <node ref="C2" pin="2"/>
+      <node ref="C4" pin="2"/>
+      <node ref="U1" pin="7"/>
+      <node ref="U2" pin="4"/>
+      <node ref="C7" pin="2"/>
+      <node ref="U1" pin="4"/>
+      <node ref="R8" pin="2"/>
+    </net>
+>>>>>>> hw4
     <net code="10" name="Net-(D2-Pad2)">
       <node ref="R5" pin="1"/>
       <node ref="D2" pin="2"/>
     </net>
+<<<<<<< HEAD
     <net code="11" name="Net-(J2-Pad1)">
       <node ref="L1" pin="1"/>
       <node ref="J2" pin="1"/>
@@ -738,6 +859,27 @@
       <node ref="C3" pin="1"/>
       <node ref="U1" pin="2"/>
       <node ref="R1" pin="1"/>
+=======
+    <net code="11" name="Net-(C3-Pad1)">
+      <node ref="C3" pin="1"/>
+      <node ref="L1" pin="1"/>
+      <node ref="J2" pin="1"/>
+    </net>
+    <net code="12" name="Net-(C3-Pad2)">
+      <node ref="J1" pin="1"/>
+      <node ref="C3" pin="2"/>
+      <node ref="R1" pin="1"/>
+      <node ref="U1" pin="2"/>
+    </net>
+    <net code="13" name="Net-(Q1-Pad4)">
+      <node ref="U1" pin="5"/>
+      <node ref="Q1" pin="4"/>
+    </net>
+    <net code="14" name="Net-(D1-Pad2)">
+      <node ref="D1" pin="2"/>
+      <node ref="Q1" pin="5"/>
+      <node ref="L1" pin="2"/>
+>>>>>>> hw4
     </net>
   </nets>
 </export>
