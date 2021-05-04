@@ -380,6 +380,7 @@ int main(void) {
     ticks_init();
     sei();
 
+
     if (HW_PORT_IN & (1 << MODE_PIN)) {  // Low bei Tank, High bei Battery
         // battery
         pwmLevel = PWM_AUS;

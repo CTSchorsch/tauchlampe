@@ -206,34 +206,14 @@ L Device:C C4
 U 1 1 5F9EC0C8
 P 6600 2600
 F 0 "C4" H 6715 2646 50  0000 L CNN
-<<<<<<< HEAD
-F 1 "47u0" H 6715 2555 50  0000 L CNN
-F 2 "Capacitor_SMD:C_1206_3216Metric" H 6638 2450 50  0001 C CNN
-=======
-F 1 "22u0/16V" H 6715 2555 50  0000 L CNN
+F 1 "" H 6600 2600 50  0001 C CNN
 F 2 "Capacitor_SMD:C_0805_2012Metric" H 6638 2450 50  0001 C CNN
->>>>>>> hw4
-F 3 "~" H 6600 2600 50  0001 C CNN
+F 3 "" H 6600 2600 50  0001 C CNN
 F 4 "C45783" H 6600 2600 50  0001 C CNN "LCSC"
 	1    6600 2600
 	1    0    0    -1  
 $EndComp
 $Comp
-<<<<<<< HEAD
-L Device:C C3
-U 1 1 5F9EC8A9
-P 2900 2950
-F 0 "C3" H 3015 2996 50  0000 L CNN
-F 1 "100u/16V" H 3015 2905 50  0000 L CNN
-F 2 "Capacitor_SMD:C_1210_3225Metric" H 2938 2800 50  0001 C CNN
-F 3 "~" H 2900 2950 50  0001 C CNN
-F 4 "C45783" H 2900 2950 50  0001 C CNN "LCSC"
-	1    2900 2950
-	1    0    0    -1  
-$EndComp
-$Comp
-=======
->>>>>>> hw4
 L power:VCC #PWR0101
 U 1 1 5F9EF59A
 P 1200 2600
@@ -297,8 +277,6 @@ Wire Wire Line
 	2150 4000 2750 4000
 Wire Wire Line
 	2750 3900 2450 3900
-Text Label 2450 3900 0    50   ~ 0
-PWM
 Wire Wire Line
 	1350 2800 1350 2600
 Connection ~ 1350 2600
@@ -364,7 +342,6 @@ F 3 "" H 4900 4150 50  0001 C CNN
 	1    4900 4150
 	1    0    0    -1  
 $EndComp
-<<<<<<< HEAD
 $Comp
 L Device:C C1
 U 1 1 5F9EA3C0
@@ -377,8 +354,6 @@ F 4 "C45783" H 1350 2950 50  0001 C CNN "LCSC"
 	1    1350 2950
 	1    0    0    -1  
 $EndComp
-=======
->>>>>>> hw4
 Wire Wire Line
 	7000 2450 7000 2300
 Wire Wire Line
@@ -798,4 +773,6 @@ F 4 "C51597" H 8050 4550 50  0001 C CNN "LCSC"
 	1    8050 4550
 	1    0    0    -1  
 $EndComp
+Text Label 2450 3900 0    50   ~ 0
+PWM
 $EndSCHEMATC
