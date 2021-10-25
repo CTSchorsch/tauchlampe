@@ -53,8 +53,8 @@
 // Ladeschlußspannung 4,2V, Entladeschlussspannung 2,75V, 3 in Serie
 #define V_VOLL 12.0  // Akku voll Spannung in volt
 #define V_HALB 10.2
-#define V_LEER 9.5  // Akku fast leer Spannung in Volt, ab hier Dimmen
-#define V_AUS 8.5   // Akku leer Spannung in Volt Volt
+#define V_LEER 9.0  // Akku fast leer Spannung in Volt, ab hier Dimmen
+#define V_AUS 8.0   // Akku leer Spannung in Volt Volt
 
 // Umrechnung der Spannung:
 // Spannung an Spannungsteiler / 1,1 V * 2^10 = Spannung in AD Einheiten
@@ -63,12 +63,12 @@
 #define R_MESS_1 82500.0
 #define R_MESS_2 6810.0
 #define U_ADC_REF 1.1
-#define ADC_OFFSET 26
-#define SPANNUNG_ZU_ADC(Spannung)                                         \
-    (uint16_t)(((Spannung * (R_MESS_2 / (R_MESS_1 + R_MESS_2))) * 1024) / \
-               U_ADC_REF)
-#define ADC_ZU_SPANNUNG(Adc) \
-    (float)((((Adc * U_ADC_REF) / 1024) * (R_MESS_1 + R_MESS_2)) / R_MESS_2)
+#define ADC_OFFSET 0
+#define SPANNUNG_ZU_ADC(Spannung) 	(uint16_t) ( ((Spannung * (R_MESS_2 / (R_MESS_1 + R_MESS_2)) ) / U_ADC_REF) * 1024 )
+#define ADC_ZU_SPANNUNG(Adc) 		(float)    ( ((Adc * U_ADC_REF) / 1024) * ((R_MESS_1 + R_MESS_2)/ R_MESS_2) )
+#define NTC_RES(adc_val)            ((1024.0 * 10000.0) / adc_val - 10000.0)
+#define NTC_TEMP(adc_val)           (1.0 / ((logf(NTC_RES(adc_val) / 10000.0) / 3950.0) + (1.0 / 298.15)) - 273.15)
+
 
 enum { LED_AUS = 0, LED_AN, LED_LANGSAM, LED_SCHNELL };
 enum { BAT_OK = 0, BAT_HALF, BAT_LOW, BAT_EMPTY };
@@ -80,6 +80,7 @@ volatile unsigned int int_ticks = 0;
 volatile unsigned char newLevel = PWM_AUS;
 volatile unsigned char pwmLevel = PWM_AUS;
 volatile unsigned char pressed = 0;
+volatile uint16_t voltmin = 1100;
 uint32_t eeVersion EEMEM = 0x50;
 
 #ifdef USE_SERIAL
@@ -91,17 +92,14 @@ char txtbuff[20];
 /**************** ISR Routinen ***************************************/
 
 #ifdef USE_SERIAL
+//19200 Baud
 ISR(TIM1_COMPB_vect) {
-    OCR1B += 13;
-    if ((OCR1B % 250) <= 13) {
-        OCR1B = 13 - (OCR1B % 250);
-    }
 
     if (txcount > 0) {
         switch (txcount) {
             case 10:
                 // Startbit low
-                cbi(HW_PORT_OUT, TMESS_PIN);
+                cbi(HW_PORT_OUT, MODE_PIN);
                 break;
             case 9:
             case 8:
@@ -112,21 +110,21 @@ ISR(TIM1_COMPB_vect) {
             case 3:
             case 2:
                 if (txdata & 0x01)
-                    sbi(HW_PORT_OUT, TMESS_PIN);
+                    sbi(HW_PORT_OUT, MODE_PIN);
                 else
-                    cbi(HW_PORT_OUT, TMESS_PIN);
+                    cbi(HW_PORT_OUT, MODE_PIN);
                 txdata = txdata >> 1;
                 break;
             case 1:
-                sbi(HW_PORT_OUT, TMESS_PIN);
+                sbi(HW_PORT_OUT, MODE_PIN);
                 break;
             default:
-                sbi(HW_PORT_OUT, TMESS_PIN);
+                sbi(HW_PORT_OUT, MODE_PIN);
                 break;
         }
         txcount--;
     } else {
-        sbi(HW_PORT_OUT, TMESS_PIN);
+        sbi(HW_PORT_OUT, MODE_PIN);
     }
 }
 
@@ -143,13 +141,24 @@ void sendString(char *txt)  // send string
     sendChar('\n');
     sendChar('\r');
 }
-
 #endif
-ISR(TIM1_COMPA_vect) {
-    ms_ticks++;
-    int_ticks++;
 
+ISR(TIM1_COMPA_vect) {
+
+	static unsigned char cnt=0;
+
+	if (cnt < 10) {
+		cnt++;
+		return;
+	} else {
+    	ms_ticks++;
+    	int_ticks++;
+		cnt = 0;
+	}
+
+	// enable pin change interrupt aggain
     if (int_ticks > 300) PCMSK = (1 << PCINT2);  // enable for PINB2
+	// reset first click
     if (int_ticks > 1000) {
         pressed = 0;
     }
@@ -180,7 +189,8 @@ ISR(PCINT0_vect) {
     static unsigned int wait;
 
     if ((HW_PORT_IN & (1 << MODE_PIN))) {  // fallende Flanke
-        PCMSK = 0;
+        //disable pin change intterupt
+		PCMSK = 0;
 
         if ((pwmLevel == PWM_AUS) && (pressed == 0)) {
             pressed = 1;
@@ -188,13 +198,17 @@ ISR(PCINT0_vect) {
             return;
         }
 
+		// debounce
         if (ms_ticks - wait < 300) {
             return;
         } else {
             wait = ms_ticks;
         }
+
         switch (pwmLevel) {
             case PWM_AUS:
+				//reset minmum voltage
+				voltmin = 1100;
                 newLevel = PWM_MAX;
                 break;
             case PWM_MAX:
@@ -217,9 +231,7 @@ ISR(PCINT0_vect) {
 void ADC_Init(void) {
     uint16_t result;
 
-    ADMUX =
-        (1
-         << REFS1);  // interne Referenzspannung (1,1 V) als Refernz f�r den ADC
+    ADMUX = (1<< REFS1);  // interne Referenzspannung (1,1 V) als Refernz f�r den ADC
     ADCSRA = (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);  // Frequenzvorteiler;
     ADCSRA |= (1 << ADEN);  // ADC aktivieren, single Conversion
     ADCSRA |= (1 << ADSC);  // eine ADC-Wandlung, Dummy Readout
@@ -285,21 +297,23 @@ void pwm_set(uint8_t val) {
 }
 
 /********** TICKS ******************************************************
- * Setup timer/counter 1 for 1 ms ticks
- * OCR1A = 125 für 1ms
- * OCR1B = 13 für 104uS -> 9600 Baud
+ * Setup timer/counter 1 for 1 us ticks
+  19,2 Baud = 52uS
+
  */
 
 void ticks_init(void) {
-    // clock divider 64: 8 Mhz / 32 = 4 uS pro timer => 250 für 1ms
-    // Clear Timer on Compare with OCR1A
-    TCCR1 = (1 << CTC1) | (1 << CS12) | (1 << CS11);  // | (1 << CS10);
-    OCR1A = 250;
+	// Clock Div 8: 8 Mhz / 8 = 1Mhz = 1us
+	// OCR1C = TOP, bei überlauf reset counter to 0;
+	// Dann OCR1 Match bei 1
+    TCCR1 = (1 << CTC1) | (1 << CS12); // | (1 << CS11);  // | (1 << CS10);
+    OCR1C = 104;
+	OCR1A = 1;
     TIMSK = (1 << OCIE1A);  // Enable Capture Interrupt
 #ifdef USE_SERIAL
-    OCR1B = 25;
+    OCR1B = 1;
     TIMSK |= (1 << OCIE1B);
-    cbi(HW_PORT_OUT, TMESS_PIN);
+    cbi(HW_PORT_OUT, MODE_PIN);
 #endif
 }
 /********* LAMPE ******************************************************/
@@ -318,11 +332,17 @@ void startup(uint8_t val) {
 
 uint8_t CheckConditions(void) {
     uint16_t volt;
-    static uint16_t voltmin = 1100;
+    
     static uint8_t dimmlevel = PWM_AUS;
     static uint8_t cnt = 0;
-
+	
     volt = ADC_Read_Avg(VMESS_CHAN, 16) - ADC_OFFSET;  // CHannel 3, 16 samples
+#ifdef USE_SERIAL
+	char buff[10];
+	int temp = ADC_Read_Avg(TMESS_CHAN,16); //NTC_TEMP(ADC_Read_Avg(TMESS_CHAN, 16));
+	itoa((int)temp,buff,10);
+	sendString(buff);
+#endif
     // immer die Min Voltage nach einschalten nehmen
     // und 10 Messungen ~ 5 Sekunden warten eh Wert �bernommen wird
     if (volt < voltmin) {
@@ -349,8 +369,9 @@ uint8_t CheckConditions(void) {
 /********** MAIN ******************************************************/
 
 void gotoSleep(void) {
-    PCMSK = (1 << PCINT2);  // enable for PINA2
+	PCMSK = (1 << PCINT2);  // enable for PINA2
     power_adc_disable();
+	sleep_bod_disable();
     TCCR1 = 0;
     HW_PORT_OUT |= (1 << LED_PIN);
     set_sleep_mode(SLEEP_MODE_PWR_DOWN);
@@ -358,7 +379,7 @@ void gotoSleep(void) {
     sleep_cpu();
     sleep_disable();
     power_adc_enable();
-    TCCR1 = (1 << CTC1) | (1 << CS12) | (1 << CS11);
+    TCCR1 = (1 << CTC1) | (1 << CS12) ; // | (1 << CS11);
 }
 
 int main(void) {
@@ -366,11 +387,12 @@ int main(void) {
 
     // Set MasterClock to 8MHz
     clock_prescale_set(clock_div_1);
+
     DDRB = (1 << LED_PIN) | (1 << PWM_PIN);
     HW_PORT_OUT = 0;
 
 #ifdef USE_SERIAL
-    DDRB |= (1 << TMESS_PIN);
+    DDRB |= (1 << MODE_PIN);
 #endif
     // Disable digital input on analog pins
     DIDR0 |= (1 << ADC2D) | (1 << ADC3D);
@@ -380,7 +402,7 @@ int main(void) {
     ticks_init();
     sei();
 
-
+#ifndef USE_SERIAL
     if (HW_PORT_IN & (1 << MODE_PIN)) {  // Low bei Tank, High bei Battery
         // battery
         pwmLevel = PWM_AUS;
@@ -392,7 +414,8 @@ int main(void) {
         // tank
         startupflag = 1;
         newLevel = eeprom_read_byte(DIMSTATE_ADDR);
-        pwmLevel = newLevel;
+        if (newLevel == 0) newLevel = PWM_MAX; //first time 
+		pwmLevel = newLevel;
         switch (newLevel) {
             case PWM_MAX:
                 eeprom_update_byte(DIMSTATE_ADDR, PWM_70);
@@ -409,9 +432,16 @@ int main(void) {
         }
         startup(newLevel);
     }
+#else
+	//DEBUG Mode, nur Netzteil, LED AUS
+	pwmLevel = PWM_AUS;
+	newLevel = pwmLevel;
+	startup(newLevel);	
+#endif
 
     ms_ticks = 0;
     while (1) {
+#ifndef USE_SERIAL
         // rest dimlevel to maximum
         if ((ms_ticks > 10000) && (startupflag == 1)) {
             startupflag = 0;
@@ -425,8 +455,7 @@ int main(void) {
             if (newLevel > PWM_AUS) {
                 pwmLevel = CheckConditions();
                 if (pwmLevel > newLevel)
-                    pwmLevel =
-                        newLevel;  // CheckConditions erlaubt höheren dimmwert
+                    pwmLevel = newLevel;  // CheckConditions erlaubt höheren dimmwert
                 startup(pwmLevel);
             }
             // Lampe an
@@ -437,6 +466,12 @@ int main(void) {
                                       // dimmwert
             pwm_set(pwmLevel);
         }
+#else
+	batteryStatus=BAT_EMPTY;
+	if ((ms_ticks % 500) == 0)
+		CheckConditions();	
+	
+#endif
     }
     return 0;
 }
