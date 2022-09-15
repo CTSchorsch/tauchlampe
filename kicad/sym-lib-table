@@ -1,3 +1,4 @@
 (sym_lib_table
-  (lib (name buck3a)(type Legacy)(uri ${KIPRJMOD}/buck3a.lib)(options "")(descr ""))
+  (lib (name "buck3a")(type "Legacy")(uri "${KIPRJMOD}/buck3a.lib")(options "")(descr ""))
+  (lib (name "buck_3a_v4-rescue")(type "Legacy")(uri "${KIPRJMOD}/buck_3a_v4-rescue.lib")(options "")(descr ""))
 )

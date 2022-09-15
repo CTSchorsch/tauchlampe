@@ -22,7 +22,7 @@
 #include <avr/sleep.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+//#include <string.h>
 #include <util/delay.h>
 
 //#define USE_SERIAL
@@ -52,8 +52,8 @@
 #define PWM_AUS 0  //				bei starkter Unterspannung
 // Ladeschlußspannung 4,2V, Entladeschlussspannung 2,75V, 3 in Serie
 #define V_VOLL 12.0  // Akku voll Spannung in volt
-#define V_HALB 10.2
-#define V_LEER 9.0  // Akku fast leer Spannung in Volt, ab hier Dimmen
+#define V_HALB 10.5
+#define V_LEER 9.5  // Akku fast leer Spannung in Volt, ab hier Dimmen
 #define V_AUS 8.0   // Akku leer Spannung in Volt Volt
 
 // Umrechnung der Spannung:
