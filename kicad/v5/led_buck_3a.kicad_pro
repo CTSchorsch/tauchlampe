@@ -45,7 +45,7 @@
         "silk_text_upright": false,
         "zones": {
           "45_degree_only": false,
-          "min_clearance": 0.15
+          "min_clearance": 0.254
         }
       },
       "diff_pair_dimensions": [
@@ -345,7 +345,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "buck_3a_v4.kicad_pro",
+    "filename": "led_buck_3a.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -401,7 +401,7 @@
       "idf": "",
       "netlist": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "led_buck_3a.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""

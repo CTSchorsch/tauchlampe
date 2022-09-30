@@ -226,9 +226,9 @@
   (symbol (lib_id "Connector:TestPoint") (at 97.155 86.995 90) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 3af06d96-7f67-4ae4-b571-d05d98fbc8a6)
-    (property "Reference" "TP4" (id 0) (at 93.853 82.6602 90))
+    (property "Reference" "SW-1" (id 0) (at 93.853 82.6602 90))
     (property "Value" "SW-" (id 1) (at 93.853 85.1971 90))
-    (property "Footprint" "TestPoint:TestPoint_THTPad_D4.0mm_Drill2.0mm" (id 2) (at 97.155 81.915 0)
+    (property "Footprint" "TestPoint:TestPoint_THTPad_D5.0mm_Drill3.0mm" (id 2) (at 97.155 81.915 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 97.155 81.915 0)
@@ -240,9 +240,9 @@
   (symbol (lib_id "Connector:TestPoint") (at 97.155 80.645 90) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 464be180-2649-40a5-986a-553388dceed3)
-    (property "Reference" "TP2" (id 0) (at 93.853 76.3102 90))
+    (property "Reference" "BAT-1" (id 0) (at 93.853 76.3102 90))
     (property "Value" "BAT-" (id 1) (at 93.853 78.8471 90))
-    (property "Footprint" "TestPoint:TestPoint_THTPad_D4.0mm_Drill2.0mm" (id 2) (at 97.155 75.565 0)
+    (property "Footprint" "TestPoint:TestPoint_THTPad_D5.0mm_Drill3.0mm" (id 2) (at 97.155 75.565 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 97.155 75.565 0)
@@ -254,9 +254,9 @@
   (symbol (lib_id "Connector:TestPoint") (at 97.155 71.755 90) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 54cd7fa4-6408-45bc-b94e-25c077756cf9)
-    (property "Reference" "TP1" (id 0) (at 93.853 67.4202 90))
+    (property "Reference" "BAT+1" (id 0) (at 93.853 67.4202 90))
     (property "Value" "BAT+" (id 1) (at 93.853 69.9571 90))
-    (property "Footprint" "TestPoint:TestPoint_THTPad_D4.0mm_Drill2.0mm" (id 2) (at 97.155 66.675 0)
+    (property "Footprint" "TestPoint:TestPoint_THTPad_D5.0mm_Drill3.0mm" (id 2) (at 97.155 66.675 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 97.155 66.675 0)
@@ -268,9 +268,9 @@
   (symbol (lib_id "Connector:TestPoint") (at 96.52 94.615 90) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid a95940ed-da1c-4634-9ca1-d2cdfdc2c676)
-    (property "Reference" "TP3" (id 0) (at 93.218 90.2802 90))
+    (property "Reference" "SW+1" (id 0) (at 93.218 90.2802 90))
     (property "Value" "SW+" (id 1) (at 93.218 92.8171 90))
-    (property "Footprint" "TestPoint:TestPoint_THTPad_D4.0mm_Drill2.0mm" (id 2) (at 96.52 89.535 0)
+    (property "Footprint" "TestPoint:TestPoint_THTPad_D5.0mm_Drill3.0mm" (id 2) (at 96.52 89.535 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 96.52 89.535 0)
@@ -301,6 +301,12 @@
   )
 
   (symbol_instances
+    (path "/54cd7fa4-6408-45bc-b94e-25c077756cf9"
+      (reference "BAT+1") (unit 1) (value "BAT+") (footprint "TestPoint:TestPoint_THTPad_D5.0mm_Drill3.0mm")
+    )
+    (path "/464be180-2649-40a5-986a-553388dceed3"
+      (reference "BAT-1") (unit 1) (value "BAT-") (footprint "TestPoint:TestPoint_THTPad_D5.0mm_Drill3.0mm")
+    )
     (path "/31544892-8ec4-47ce-b873-1f2750fb72dd"
       (reference "H1") (unit 1) (value "MountingHole") (footprint "MountingHole:MountingHole_3.2mm_M3_DIN965")
     )
@@ -310,17 +316,11 @@
     (path "/27d1311a-0b7b-40f0-a5a6-a3f4ec263558"
       (reference "J1") (unit 1) (value "Conn_01x03") (footprint "Connector_PinSocket_2.00mm:PinSocket_1x03_P2.00mm_Vertical_SMD_Pin1Left")
     )
-    (path "/54cd7fa4-6408-45bc-b94e-25c077756cf9"
-      (reference "TP1") (unit 1) (value "BAT+") (footprint "TestPoint:TestPoint_THTPad_D4.0mm_Drill2.0mm")
-    )
-    (path "/464be180-2649-40a5-986a-553388dceed3"
-      (reference "TP2") (unit 1) (value "BAT-") (footprint "TestPoint:TestPoint_THTPad_D4.0mm_Drill2.0mm")
-    )
     (path "/a95940ed-da1c-4634-9ca1-d2cdfdc2c676"
-      (reference "TP3") (unit 1) (value "SW+") (footprint "TestPoint:TestPoint_THTPad_D4.0mm_Drill2.0mm")
+      (reference "SW+1") (unit 1) (value "SW+") (footprint "TestPoint:TestPoint_THTPad_D5.0mm_Drill3.0mm")
     )
     (path "/3af06d96-7f67-4ae4-b571-d05d98fbc8a6"
-      (reference "TP4") (unit 1) (value "SW-") (footprint "TestPoint:TestPoint_THTPad_D4.0mm_Drill2.0mm")
+      (reference "SW-1") (unit 1) (value "SW-") (footprint "TestPoint:TestPoint_THTPad_D5.0mm_Drill3.0mm")
     )
   )
 )
