@@ -14,7 +14,6 @@
 
 #define ADC_CHAN_TEMP_INTERNAL  0
 #define ADC_CHAN_VCC            1
-#define ADC_CHAN_TEMP           2
 
 #define NTC_VALUE_PCB           10000.0
 #define NTC_SERIES_R            82500.0
@@ -24,8 +23,8 @@
 #define NTC_VALUE(adc_val)      (uint16_t)((NTC_SERIES_R*(NTC_VOLTAGE(adc_val)/5.0)) / (1 - (NTC_VOLTAGE(adc_val)/5.0)))
 #define NTC_TEMP                (float)((1.0 /  ( (1.0 / NTC_TN) + (1.0 / NTC_BETA) * logf(NTC_VALUE(ADC_VAL[ADC_CHAN_TEMP]) / NTC_VALUE_PCB) ) )-273.15)
 
-#define R_MESS_1 82500.0
-#define R_MESS_2 6810.0
+#define R_MESS_1 820000.0
+#define R_MESS_2 68000.0
 #define U_ADC_REF 1.1
 #define U_VCC 		            (float)    ( (((ADC_VAL[ADC_CHAN_VCC]) * U_ADC_REF) / 1024) * ((R_MESS_1 + R_MESS_2)/ R_MESS_2) )
 
@@ -43,14 +42,15 @@ enum { BAT_OK = 0, BAT_HALF, BAT_LOW, BAT_EMPTY };
 // Ladeschlußspannung 4,2V, Entladeschlussspannung 2,75V, 3 in Serie
 #define V_VOLL 12.0  // Akku voll Spannung in volt
 #define V_HALB 10.5
-#define V_LEER 9.5  // Akku fast leer Spannung in Volt, ab hier Dimmen
-#define V_AUS 8.0   // Akku leer Spannung in Volt
+#define V_LEER 9.2  // Akku fast leer Spannung in Volt, ab hier Dimmen
+#define V_AUS 8.5   // Akku leer Spannung in Volt
 
 #define OVERTEMP_HIGH   70
 #define OVERTEMP_LOW    60
 
 #define DIMSTATE_ADDR 0
 
+#define WAIT_TIME 300   //entprellzeit in ms
 
 // Helper
 #define sbi(x, b) x.OUTSET = (1 << (b))

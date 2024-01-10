@@ -1,6 +1,6 @@
 {
   "board": {
-    "active_layer": 0,
+    "active_layer": 37,
     "active_layer_preset": "",
     "auto_track_width": true,
     "hidden_nets": [],
@@ -62,11 +62,11 @@
       35,
       36
     ],
-    "visible_layers": "000d020_80000001",
-    "zone_display_mode": 0
+    "visible_layers": "000d023_80000001",
+    "zone_display_mode": 1
   },
   "meta": {
-    "filename": "buck_3a_v4.kicad_prl",
+    "filename": "led_buck_3a.kicad_prl",
     "version": 3
   },
   "project": {
