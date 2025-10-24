@@ -1,0 +1,52 @@
+%TF.GenerationSoftware,KiCad,Pcbnew,8.0.9-8.0.9-0~ubuntu22.04.1*%
+%TF.CreationDate,2025-09-24T14:32:09+02:00*%
+%TF.ProjectId,batteriedeckel,62617474-6572-4696-9564-65636b656c2e,rev?*%
+%TF.SameCoordinates,Original*%
+%TF.FileFunction,Legend,Bot*%
+%TF.FilePolarity,Positive*%
+%FSLAX46Y46*%
+G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
+G04 Created by KiCad (PCBNEW 8.0.9-8.0.9-0~ubuntu22.04.1) date 2025-09-24 14:32:09*
+%MOMM*%
+%LPD*%
+G01*
+G04 APERTURE LIST*
+G04 Aperture macros list*
+%AMFreePoly0*
+4,1,5,1.000000,-2.000000,-1.000000,-2.000000,-1.000000,2.000000,1.000000,2.000000,1.000000,-2.000000,1.000000,-2.000000,$1*%
+G04 Aperture macros list end*
+%ADD10C,3.200000*%
+%ADD11C,5.000000*%
+%ADD12FreePoly0,0.000000*%
+%ADD13C,0.500000*%
+G04 APERTURE END LIST*
+%LPC*%
+D10*
+%TO.C,H2*%
+X100000000Y-118000000D03*
+%TD*%
+%TO.C,H1*%
+X100000000Y-82000000D03*
+%TD*%
+D11*
+%TO.C,BAT+*%
+X92750000Y-87443000D03*
+%TD*%
+%TO.C,SW-*%
+X114500000Y-100000000D03*
+%TD*%
+D12*
+%TO.C,BAT-*%
+X95000000Y-100000000D03*
+%TD*%
+D11*
+%TO.C,SW+*%
+X92750000Y-112557000D03*
+%TD*%
+D13*
+%TO.C,J1*%
+X100000000Y-101000000D03*
+X100000000Y-99000000D03*
+%TD*%
+%LPD*%
+M02*
