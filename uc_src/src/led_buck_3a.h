@@ -23,7 +23,7 @@
 #define NTC_VALUE(adc_val)      (uint16_t)((NTC_SERIES_R*(NTC_VOLTAGE(adc_val)/5.0)) / (1 - (NTC_VOLTAGE(adc_val)/5.0)))
 #define NTC_TEMP                (float)((1.0 /  ( (1.0 / NTC_TN) + (1.0 / NTC_BETA) * logf(NTC_VALUE(ADC_VAL[ADC_CHAN_TEMP]) / NTC_VALUE_PCB) ) )-273.15)
 
-#define R_MESS_1 820000.0
+#define R_MESS_1 825000.0
 #define R_MESS_2 68000.0
 #define U_ADC_REF 1.1
 #define U_VCC 		            (float)    ( (((ADC_VAL[ADC_CHAN_VCC]) * U_ADC_REF) / 1024) * ((R_MESS_1 + R_MESS_2)/ R_MESS_2) )

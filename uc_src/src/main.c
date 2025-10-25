@@ -10,6 +10,7 @@
  *
  *
  * History:
+ * 2025-10-24   HW v6.0 ready
  * 2022-09-30   CPU Wechsel für V5 auf ATTINY1616
  * 2022-10-27   NTC Zweig abgeklemmt. Nutze CPU T Sensor
  *              IDLE Stromaufnahme bei 230u
@@ -349,7 +350,7 @@ void main ()
     
     port_init();
     init();
-
+  
     //check mode pin
     //HIGH beim starten -> Akkufach
     if (MODE_PORT.IN & MODE_PIN_bm) {
