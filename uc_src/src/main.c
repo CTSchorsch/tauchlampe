@@ -32,16 +32,16 @@
     1           Eingangsspannung
     2           PCB Temperatur
 */
-uint16_t ADC_VAL[2];
+volatile uint16_t ADC_VAL[2];
 
-uint8_t batteryStatus = BAT_OK;
-uint8_t newLevel = PWM_AUS;
-uint8_t pwmLevel = PWM_AUS;
-bool isOvertemp = false;
-uint32_t ms_ticks = 0;
-uint32_t but_ticks = 0;
-float voltmin = 14.0;
-bool pressed = false;
+volatile uint8_t batteryStatus = BAT_OK;
+volatile uint8_t newLevel = PWM_AUS;
+volatile uint8_t pwmLevel = PWM_AUS;
+volatile bool isOvertemp = false;
+volatile uint32_t ms_ticks = 0;
+volatile uint32_t but_ticks = 0;
+volatile float voltmin = 14.0;
+volatile bool pressed = false;
 
 //1ms tick
 ISR(TCB1_INT_vect)
@@ -180,7 +180,6 @@ void USART0_sendString(char *str)
 
 void setPWM(uint8_t level)  //level in Prozent
 {
-    char buff[100];
     uint8_t val = (uint8_t)((255 * level)/100);
 
     if (level == 0) {
@@ -228,11 +227,11 @@ uint16_t getOnChipTemperature()
     return (uint16_t) temp-273;
 }
 
-uint8_t CheckConditions(void) 
+uint8_t CheckConditions(void)
 {
     static uint8_t dimmlevel = PWM_AUS;
     static uint8_t cnt = 0;
-    
+
     // immer die Min Voltage nach einschalten nehmen
     // und 10 Messungen ~ 5 Sekunden warten eh Wert �bernommen wird
     if (U_VCC < voltmin) {
@@ -342,10 +341,8 @@ void init()
  
 }
 
-void main () 
+void main ()
 {
-    char buff[128];
-    uint8_t a,b;
     bool tank_start = false;
     
     port_init();
@@ -387,17 +384,8 @@ void main ()
         startup(newLevel);
     }
     
-    //sprintf(buff,"G-LAMP - SW Version: %d.%d\n",SW_VERSION_MAJOR,SW_VERSION_MINOR);
-    //USART0_sendString(buff);
-
     ms_ticks = 0;
     while (1) {
-        if ( ms_ticks % 1000 == 0) {
-            a = (uint8_t) U_VCC;
-            b = (uint8_t) ((U_VCC - a)*100);
-            //sprintf(buff, "Vbat %d.%dV, T-CPU: %d\n",a,b, getOnChipTemperature());
-            //USART0_sendString(buff);
-        }
         if ((ms_ticks > 10000) && tank_start) {
             tank_start = false;
             eeprom_update_byte(DIMSTATE_ADDR, PWM_MAX);

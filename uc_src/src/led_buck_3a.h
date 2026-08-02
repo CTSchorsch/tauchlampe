@@ -15,20 +15,11 @@
 #define ADC_CHAN_TEMP_INTERNAL  0
 #define ADC_CHAN_VCC            1
 
-#define NTC_VALUE_PCB           10000.0
-#define NTC_SERIES_R            82500.0
-#define NTC_BETA                3950.0
-#define NTC_TN                  (273.15 + 25.0)
-#define NTC_VOLTAGE(adc_val)    (float)((adc_val*1.1)/1024)
-#define NTC_VALUE(adc_val)      (uint16_t)((NTC_SERIES_R*(NTC_VOLTAGE(adc_val)/5.0)) / (1 - (NTC_VOLTAGE(adc_val)/5.0)))
-#define NTC_TEMP                (float)((1.0 /  ( (1.0 / NTC_TN) + (1.0 / NTC_BETA) * logf(NTC_VALUE(ADC_VAL[ADC_CHAN_TEMP]) / NTC_VALUE_PCB) ) )-273.15)
-
 #define R_MESS_1 825000.0
 #define R_MESS_2 68000.0
 #define U_ADC_REF 1.1
 #define U_VCC 		            (float)    ( (((ADC_VAL[ADC_CHAN_VCC]) * U_ADC_REF) / 1024) * ((R_MESS_1 + R_MESS_2)/ R_MESS_2) )
 
-enum { LED_AUS = 0, LED_AN, LED_LANGSAM, LED_SCHNELL };
 enum { BAT_OK = 0, BAT_HALF, BAT_LOW, BAT_EMPTY };
 
 // Max, Min und Hysterese Werte
@@ -40,7 +31,6 @@ enum { BAT_OK = 0, BAT_HALF, BAT_LOW, BAT_EMPTY };
 #define PWM_AUS 0  //				bei starkter Unterspannung
 
 // Ladeschlußspannung 4,2V, Entladeschlussspannung 2,75V, 3 in Serie
-#define V_VOLL 12.0  // Akku voll Spannung in volt
 #define V_HALB 10.5
 #define V_LEER 9.2  // Akku fast leer Spannung in Volt, ab hier Dimmen
 #define V_AUS 8.5   // Akku leer Spannung in Volt
@@ -51,10 +41,6 @@ enum { BAT_OK = 0, BAT_HALF, BAT_LOW, BAT_EMPTY };
 #define DIMSTATE_ADDR 0
 
 #define WAIT_TIME 300   //entprellzeit in ms
-
-// Helper
-#define sbi(x, b) x.OUTSET = (1 << (b))
-#define cbi(x, b) x.OUTCLR = (1 << (b))
 
 // Hardware Pins
 #define LED_PORT PORTA
@@ -68,7 +54,7 @@ enum { BAT_OK = 0, BAT_HALF, BAT_LOW, BAT_EMPTY };
 #define VMESS_PORT PORTB
 #define VMESS_PIN 4
 #define VMESS_ADC_CHAN 9
-#define TMESS_PIN PORTB
+#define TMESS_PORT PORTB
 #define TMESS_PIN 5
 #define TMESS_ADC_CHAN 8
 
