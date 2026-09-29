@@ -71,7 +71,8 @@ enum { BAT_OK = 0, BAT_HALF, BAT_LOW, BAT_EMPTY };
 #define VMESS_ADC_CHAN 8
 
 // 1 = einmal pro Messung Rohwert/Spannung/Temperatur auf UART ausgeben
-#define DEBUG_UART 1
+// (nur zum Debuggen/Kalibrieren einschalten, im Normalbetrieb 0)
+#define DEBUG_UART 0
 
 #define UART_BAUD 9600
 #define UART_RX_PORT PORTB
