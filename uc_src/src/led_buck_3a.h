@@ -15,10 +15,23 @@
 #define ADC_CHAN_TEMP_INTERNAL  0
 #define ADC_CHAN_VCC            1
 
-#define R_MESS_1 825000.0
-#define R_MESS_2 68000.0
+// Spannungsteiler VMESS (VCC -> R3 -> VMESS -> R4 -> GND), HW v6
+// ACHTUNG: Quellimpedanz = R1||R2 = 62,9k. Das ist weit ueber dem, was der
+// ADC bei Default-Timing treiben kann -> ADC0 laeuft deshalb langsam
+// (PRESC_DIV32) mit verlaengerter Sample-Zeit (SAMPLEN=31, SAMPCAP=1).
+#define R_MESS_1 825000.0   // R3
+#define R_MESS_2 68100.0    // R4 (68k1 laut BOM)
 #define U_ADC_REF 1.1
-#define U_VCC 		            (float)    ( (((ADC_VAL[ADC_CHAN_VCC]) * U_ADC_REF) / 1024) * ((R_MESS_1 + R_MESS_2)/ R_MESS_2) )
+// Korrekturfaktor fuer die Toleranz der internen 1,1V Referenz (+-3%).
+// Ermittlung: U_gemessen(Multimeter) / U_ausgegeben(UART) -> hier eintragen.
+// 2026-09-29 auf HW v6 gegen Multimeter geprueft: die UART-Ausgabe stimmt
+// auf wenige mV, es ist also keine Korrektur noetig -> bleibt bewusst 1.0.
+#define U_CAL 1.0
+
+// Rohwert (auf 10 Bit normiert) -> Batteriespannung in Volt
+#define ADC_TO_VOLT(adc)    ( (float)(adc) * (float)(U_ADC_REF / 1024.0) \
+                              * (float)((R_MESS_1 + R_MESS_2) / R_MESS_2) \
+                              * (float)U_CAL )
 
 enum { BAT_OK = 0, BAT_HALF, BAT_LOW, BAT_EMPTY };
 
@@ -51,12 +64,14 @@ enum { BAT_OK = 0, BAT_HALF, BAT_LOW, BAT_EMPTY };
 #define MODE_PORT PORTA
 #define MODE_PIN_bm PIN4_bm
 
+// HW v6: VMESS haengt an PB5 = AIN8. PB4 ist unbeschaltet.
+// Der NTC-Zweig entfaellt, es wird der CPU-interne Sensor benutzt.
 #define VMESS_PORT PORTB
-#define VMESS_PIN 4
-#define VMESS_ADC_CHAN 9
-#define TMESS_PORT PORTB
-#define TMESS_PIN 5
-#define TMESS_ADC_CHAN 8
+#define VMESS_PIN 5
+#define VMESS_ADC_CHAN 8
+
+// 1 = einmal pro Messung Rohwert/Spannung/Temperatur auf UART ausgeben
+#define DEBUG_UART 1
 
 #define UART_BAUD 9600
 #define UART_RX_PORT PORTB
