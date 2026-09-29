@@ -1,4 +1,7 @@
 bestellungen/
 doc/Aufbau.odt
 ZZ_Archiv/
-kicad/batteriedeckel/batteriedeckel/batteriedeckel-backups/
+
+# KiCad-Backups und Autosave-Dateien (in jedem Projekt)
+*-backups/
+_autosave-*
