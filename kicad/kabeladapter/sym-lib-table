@@ -1,0 +1,4 @@
+(sym_lib_table
+	(version 7)
+	(lib (name "buck3a") (type "Legacy") (uri "${KIPRJMOD}/buck3a.lib") (options "") (descr ""))
+)
